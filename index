@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shahriyor's Portfolio | Economics & Data Science Student</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a2332;
+            --secondary: #2d3e50;
+            --accent: #e84545;
+            --accent-light: #ff6b6b;
+            --text: #f5f5f5;
+            --text-secondary: #b8c1cc;
+            --card-bg: rgba(45, 62, 80, 0.6);
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Background Animation */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--primary);
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(245, 87, 108, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(79, 172, 254, 0.15) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: rgba(26, 35, 50, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--text);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 5%;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            text-align: left;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #b8c1cc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .hero .description {
+            max-width: 600px;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            box-shadow: 0 10px 30px rgba(232, 69, 69, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(232, 69, 69, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--text-secondary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--text);
+            transform: translateY(-3px);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .about-text p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(232, 69, 69, 0.2);
+        }
+
+        .stat-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Education Section */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent) 0%, transparent 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3.5rem;
+            top: 2rem;
+            width: 15px;
+            height: 15px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+        }
+
+        .timeline-item:hover {
+            transform: translateX(10px);
+            border-color: var(--accent);
+        }
+
+        .timeline-date {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .timeline-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .timeline-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .achievement-tag {
+            display: inline-block;
+            background: rgba(232, 69, 69, 0.2);
+            color: var(--accent-light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin: 0.5rem 0.5rem 0 0;
+            font-weight: 500;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-category {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 40px rgba(232, 69, 69, 0.2);
+        }
+
+        .skill-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-category h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            color: var(--text-secondary);
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .skill-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .project-card:hover .project-image::after {
+            transform: translateX(100%);
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        /* Contact Section */
+        .contact-content {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-content p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .contact-link:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(232, 69, 69, 0.2);
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 5%;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+
+        footer p {
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--card-bg);
+            border-radius: 50%;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(232, 69, 69, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline {
+                padding-left: 2rem;
+            }
+
+            .timeline-item::before {
+                left: -2.5rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-light);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">SK</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Shahriyor Karimov</h1>
+            <p class="subtitle">Economics & Data Science Student</p>
+            <p class="description">
+                Third-year student at Constructor University Bremen, passionate about data analytics, 
+                economics, and solving complex problems through quantitative methods. Combining strong 
+                analytical skills with multilingual capabilities.
+            </p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">Get In Touch</a>
+                <a href="#projects" class="btn btn-secondary">View My Work</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>
+                    I'm a Global Economics and Management student at Constructor University Bremen, 
+                    with a strong foundation in data analytics and quantitative methods. My academic 
+                    journey has been marked by exceptional performance in mathematics and data science.
+                </p>
+                <p>
+                    Originally from Tashkent, Uzbekistan, I bring a unique international perspective 
+                    to my work. I'm fluent in four languages and combine technical skills with 
+                    strategic thinking developed through competitive chess (top 1% on Chess.com).
+                </p>
+                <p>
+                    Currently seeking opportunities to apply my skills in data analytics, economics 
+                    research, and business intelligence roles.
+                </p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Applied Calculus Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Marketing Grade</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">88%</div>
+                    <div class="stat-label">Data Analytics & Modeling</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Languages Spoken</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+        <h2 class="section-title">Education</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">Sept 2024 - May 2027</div>
+                <h3 class="timeline-title">Bachelor of Science in Global Economics and Management</h3>
+                <p class="timeline-subtitle">Constructor University, Bremen, Germany</p>
+                <p class="timeline-description">
+                    Comprehensive curriculum combining economics, data science, and business management. 
+                    Focus on quantitative methods, statistical analysis, and economic modeling.
+                </p>
+                <div>
+                    <span class="achievement-tag">Applied Calculus: 100%</span>
+                    <span class="achievement-tag">Marketing: 98%</span>
+                    <span class="achievement-tag">Data Analytics: 88%</span>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">Sept 2023 - May 2024</div>
+                <h3 class="timeline-title">Certificate in International Foundation Studies</h3>
+                <p class="timeline-subtitle">Westminster International University, Tashkent</p>
+                <p class="timeline-description">
+                    Preparatory program providing foundation in mathematics, economics, and English 
+                    language skills for international higher education.
+                </p>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-date">Sept 2021 - May 2023</div>
+                <h3 class="timeline-title">Secondary School Certificate</h3>
+                <p class="timeline-subtitle">Academic Lyceum of Westminster International University</p>
+                <p class="timeline-description">
+                    Completed secondary education with focus on mathematics and sciences, preparing 
+                    for university-level economics and data science studies.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2 class="section-title">Skills & Expertise</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <div class="skill-icon">📊</div>
+                <h3>Data Analytics</h3>
+                <ul class="skill-list">
+                    <li>R (Statistical Analysis)</li>
+                    <li>Python (Data Processing)</li>
+                    <li>SQL Databases</li>
+                    <li>Data Visualization</li>
+                    <li>Predictive Modeling</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-icon">💼</div>
+                <h3>Economics & Business</h3>
+                <ul class="skill-list">
+                    <li>Microeconomics</li>
+                    <li>Macroeconomics</li>
+                    <li>Financial Analysis</li>
+                    <li>Market Research</li>
+                    <li>Economic Modeling</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-icon">🔬</div>
+                <h3>Research Methods</h3>
+                <ul class="skill-list">
+                    <li>Qualitative Research</li>
+                    <li>Statistical Inference</li>
+                    <li>Applied Statistics</li>
+                    <li>Data Structures</li>
+                    <li>Comparative Analysis</li>
+                </ul>
+            </div>
+
+            <div class="skill-category">
+                <div class="skill-icon">🌍</div>
+                <h3>Languages</h3>
+                <ul class="skill-list">
+                    <li>Uzbek (Native)</li>
+                    <li>English (IELTS 7.0)</li>
+                    <li>Russian (Fluent)</li>
+                    <li>German (B1.1)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2 class="section-title">Projects & Activities</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">♟️</div>
+                <div class="project-content">
+                    <h3 class="project-title">Chess Education Content</h3>
+                    <p class="project-description">
+                        Created educational chess content on Instagram (@chess.brilliantmoves) focusing 
+                        on strategic analysis and tactical patterns. Achieved top 1% ranking on Chess.com 
+                        with 1900+ rapid rating.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Content Creation</span>
+                        <span class="tag">Strategy</span>
+                        <span class="tag">Analytics</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image" style="background: var(--gradient-2);">📈</div>
+                <div class="project-content">
+                    <h3 class="project-title">Data Analytics Projects</h3>
+                    <p class="project-description">
+                        Completed comprehensive data analytics and modeling coursework with 88% grade. 
+                        Projects include statistical analysis with R, predictive modeling, and data visualization.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">R Programming</span>
+                        <span class="tag">Statistics</span>
+                        <span class="tag">Visualization</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image" style="background: var(--gradient-3);">💡</div>
+                <div class="project-content">
+                    <h3 class="project-title">Economic Research</h3>
+                    <p class="project-description">
+                        Conducted research on comparative economic systems, environmental economics, 
+                        and market dynamics. Strong performance across all economics modules.
+                    </p>
+                    <div class="project-tags">
+                        <span class="tag">Economics</span>
+                        <span class="tag">Research</span>
+                        <span class="tag">Analysis</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-content">
+            <p>
+                I'm currently seeking internship opportunities in data analytics, economics research, 
+                and business intelligence. Let's connect and discuss how I can contribute to your team.
+            </p>
+            <div class="contact-links">
+                <a href="mailto:your.email@constructor.university" class="contact-link">
+                    <span class="contact-icon">✉️</span>
+                    <span>Email Me</span>
+                </a>
+                <a href="https://linkedin.com/in/yourprofile" class="contact-link" target="_blank">
+                    <span class="contact-icon">💼</span>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="https://github.com/yourprofile" class="contact-link" target="_blank">
+                    <span class="contact-icon">💻</span>
+                    <span>GitHub</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Shahriyor Karimov. Built with passion and precision.</p>
+        <p>Bremen, Germany | Economics & Data Science Student</p>
+        <div class="social-links">
+            <a href="https://instagram.com/chess.brilliantmoves" class="social-link" target="_blank">📸</a>
+            <a href="https://chess.com/member/yourprofile" class="social-link" target="_blank">♟️</a>
+            <a href="https://linkedin.com/in/yourprofile" class="social-link" target="_blank">💼</a>
+            <a href="https://github.com/yourprofile" class="social-link" target="_blank">💻</a>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll animation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all timeline items and project cards
+        document.querySelectorAll('.timeline-item, .project-card, .skill-category').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Add active state to navigation on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
